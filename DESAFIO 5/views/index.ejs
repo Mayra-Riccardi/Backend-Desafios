@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Desafio 5 - EJS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+</head>
+
+<body>
+    <div>
+
+            <div>
+                <h2>Productos</h2>
+                <br>
+                <% if(mostrarProductos){%>
+                    <div class="table-responsive rounded">
+                        <table class="table rounded table-dark">
+                            <tr class="">
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Imagen</th>
+                            </tr>
+                            <%products.forEach(function(product){%>
+                                <tr>
+                                    <td>
+                                        <%=product.name%>
+                                    </td>
+                                    <td>
+                                        <%=product.price%>
+                                    </td>
+                                    <td><img width="50" src=<%=product.thumbnail%> alt="not found"></td>
+                                </tr>
+                                <%});%>
+                        </table>
+                    </div>
+                    <% } else{ %>
+                        <h3 class="alert alert-warning">No se encontraron productos</h3>
+                        <% } %>
+                            <br>
+                            <a href="/" type="button" class="btn btn-primary">Volver</a>
+            </div>
+    </div>
