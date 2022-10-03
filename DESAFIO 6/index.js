@@ -35,7 +35,16 @@ app.set("view engine", "hbs");
 
 //Routes
 app.get("/", (req, res) => {
-  res.render("index");
+  if (list.length >= 1) {
+    res.render("index", {
+      mostrarProductos: true,
+      products: list,
+    });
+  } else {
+    res.render("index", {
+      mostrarProductos: false,
+    });
+  }
 });
 
 app.post("/", (req, res) => {
@@ -64,19 +73,19 @@ io.on("connection", (socket) => {
 
  io.emit("message", [...messages]);
 
- socket.on("new-user", (email) => {
+ socket.on("new-user", (username) => {
   const newUser = {
     id: socket.id,
-    email: email,
+    username: username,
   };
   users.push(newUser);
  });
 
  socket.on("new-message", async (msj) => {
   const user = users.find((user) => user.id === socket.id);
-  const newMessage = formatMessage(socket.id, user.email, msj);
+  const newMessage = formatMessage(socket.id, user.username, msj);
   messages.push(newMessage);
-  products.saveMessage(user.email, msj, newMessage.time);
+  products.saveMessage(user.username, msj, newMessage.time);
 
   io.emit("chat-message", newMessage);
  })

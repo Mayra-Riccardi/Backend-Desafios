@@ -1,5 +1,8 @@
 <h1 style="font-size: revert; margin-top: 50px; display: flex; justify-content: center;">Productos Cargados</h1>
+{{#if mostrarProductos}}
     <div >
-        <table id="table-products" style="margin: 30px; display: flex; justify-content: center; background-color: #e2e6ea;;" ></table>
+        <table id="table-products" style="margin: 30px; display: flex; justify-content: center; background-color: #e2e6ea;;" > </table>
     </div>
-
+    {{else}}
+    <h3 style="margin-top: 50px; display: flex; justify-content: center; font-style: italic; color: red; font-size: initial;"> Aún no hay productos cargados</h3>
+{{/if}}

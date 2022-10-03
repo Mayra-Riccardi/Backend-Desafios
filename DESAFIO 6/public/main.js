@@ -29,7 +29,7 @@ socket.on("products", (data) => {
   div.innerHTML = `${table} ${html}`;
 });
 
-//CHAT - MESSAGE ------------------------------------------------------------
+//CHAT
 const formChat = document.getElementById("form-chat");
 const inputEmail = document.getElementById("username");
 const inputText = document.getElementById("text");

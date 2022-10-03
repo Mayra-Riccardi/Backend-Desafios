@@ -29,9 +29,9 @@ const msj = [];
   return newProduct
   } 
 
-    saveMessage(email, text, time) {
+    saveMessage(username, text, time) {
       const user = {
-        email,
+        username,
         text,
         time,
       };
