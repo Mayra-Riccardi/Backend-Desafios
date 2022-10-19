@@ -55,7 +55,7 @@ return newProduct
         price,
         thumbnail
     }= product;
-  const updateProducto ={
+  const updateProduct ={
     id:this.list[productIndex].id,
     title,
     price,
