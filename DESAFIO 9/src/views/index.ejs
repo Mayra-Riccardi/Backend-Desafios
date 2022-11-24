@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Desafio Sessions | Clase 24 | Coderhouse</title>
+</head>
+<body class="bg-dark">
+    <nav class="navbar navbar-expand-md navbar-light bg-light mb-5 justify-content-center px-5">
+        <h1 class="fw-bolder text-dark">DESAFIO CLASE 24: SESSIONS</h1>
+    </nav>
+    <div class="container mt-3">
+        <h1 class="alert alert-success d-flex justify-content-between">
+            Bienvenido/a <%= name %>
+            <a class="btn btn-warning m-0 p-3" href="/logout" role="button">Desloguear</a>
+        </h1>
+    </div>
+    <div class="container">
+        <section class="bg-light mt-5 p-3">
+            <div class="container text-center">
+                <div class="mb-4">
+                    <h2>FORMULARIO DE CARGA DE PRODUCTOS</h2>
+                    <form id="productsForm" class="mt-5 w-75 m-auto">
+                        <label for="title" class="form-label">Titulo</label>
+                        <input type="text" required name="title" class="form-control">
+                        <label for="price" class="form-label">Precio</label>
+                        <input type="number" required name="price" step=".01" class="form-control">
+                        <label for="thumbnail" class="form-label">Imagen</label>
+                        <input type="text" required name="thumbnail" class="form-control" placeholder="https://imagen.com/img.jpg">
+                        <button type="submit" class="btn btn-success mt-3">CARGAR</button>
+                    </form>
+                </div>
+            </div>
+            <!-- Aqui se renderea la plantilla de productos -->
+            <div id="products" class="mt-5 container text-center"></div>
+        </section>
+        <section class="bg-light mt-3 p-3">
+            <div class="container mt-3">
+                <h3>Centro de mensajes</h3>
+                <form id="messageCenter" class="form">
+                    <input class="col-12 col-md-6" type="email" name="email" placeholder="Ej. ramiroporta@gmail.com" required>
+                    <hr>
+                    <!-- Aqui se renderean los mensajes -->
+                    <div id="chatLog" class="p-3 border border-white" style="max-height: 400px; overflow-y: auto;">
+                    </div>
+                    <div class="mt-3 d-flex col-12 col-md-6 justify-content-between">
+                        <input class="col-9 col-xl-10" type="text" name="message" placeholder="Escriba aqui su mensaje" required>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!-- EJS -->
+    <script src="ejs.min.js"></script>
+    <!-- NORMALIZR -->
+    <script src="https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js"></script>
+    <!-- Websockets -->
+    <script src="./socket.io/socket.io.js"></script>
+    <!-- Own JS -->
+    <script src="main.js"></script>
+</body>
+</html>
