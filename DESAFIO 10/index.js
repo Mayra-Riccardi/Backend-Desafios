@@ -1,18 +1,21 @@
-// Prueba de fetch para el desafio
-
+//Importaciones
 const express = require ('express');// como siempre importar libreria de express
 const { Server: HttpServer } = require ('http');//los dos puntos son para cambiarle el nombre al servidor
 const { Server: SocketServer } = require ('socket.io');//importamos libreria de websocket
 const Products = require("./model/data");
 const Messages = require ('./model/messages')
 const dbConfig = require ('./db/config')
+const routes = require('./routers/index')
+const MongoStore = require('connect-mongo')
 
 const PORT = process.env.PORT || 8080;// definimos puerto
 const app = express();//definimos constante para nuestro servidor
+
 const httpServer = new HttpServer(app);
 const io = new SocketServer(httpServer);//estos dos ultimos pasos se hacen para imprementar express y socket al tiempo.
 const productsDB = new Products('products', dbConfig.mariaDB);//mi clase de productos
 const messagesDB = new Messages("messages", dbConfig.sqlite)
+const session = require('express-session');
 
 
 
@@ -21,6 +24,22 @@ const messagesDB = new Messages("messages", dbConfig.sqlite)
 app.use(express.static('./public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+//Motor de plantilla
+app.set('view engine', 'ejs');
+//Configuracion de Sessions
+app.use(session({
+  store: MongoStore.create({mongoUrl:'mongodb+srv://mayricca5:Mavica2105@youneedsushi.nuk3cgy.mongodb.net/sessions?retryWrites=true&w=majority'}),
+  secret: 'shhhhhhhhhhhhhhhhhhhhh',
+  resave: false,
+  saveUninitialized: false,
+  rolling: true,
+  cookie: {
+      maxAge: 60000
+  }
+}))
+
+//Routes
+app.use('/', routes)
 
 
 //Variable
