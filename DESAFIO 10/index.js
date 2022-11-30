@@ -7,6 +7,7 @@ const Messages = require ('./model/messages')
 const dbConfig = require ('./db/config')
 const routes = require('./routers/index')
 const MongoStore = require('connect-mongo')
+const envConfig = require ('./config');
 
 const PORT = process.env.PORT || 8080;// definimos puerto
 const app = express();//definimos constante para nuestro servidor
@@ -28,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 //Configuracion de Sessions
 app.use(session({
-  store: MongoStore.create({mongoUrl:'mongodb+srv://mayricca5:Mavica2105@youneedsushi.nuk3cgy.mongodb.net/sessions?retryWrites=true&w=majority'}),
+  store: MongoStore.create({mongoUrl:`mongodb+srv://mayricca5:${envConfig.DB_PASSWORD}@youneedsushi.nuk3cgy.mongodb.net/sessions?retryWrites=true&w=majority`}),
   secret: 'shhhhhhhhhhhhhhhhhhhhh',
   resave: false,
   saveUninitialized: false,
