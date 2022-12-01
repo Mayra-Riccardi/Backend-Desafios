@@ -1,3 +1,5 @@
+const envConfig = require('../config');
+
 module.exports = {
     mariaDB: {
        client: 'mysql',
@@ -13,5 +15,10 @@ module.exports = {
         connection: {
             filename: './db/sqlite/chat.sqlite'
         }
-    }   
+    },
+
+    mongodb: {
+        uri: `mongodb+srv://mayricca5:${envConfig.DB_PASSWORD}@youneedsushi.nuk3cgy.mongodb.net/users?retryWrites=true&w=majority`,
+      }
+    
 }
