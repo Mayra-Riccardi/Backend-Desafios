@@ -8,6 +8,7 @@ const dbConfig = require ('./db/config')
 const routes = require('./routers/app.routers')
 const MongoStore = require('connect-mongo')
 const envConfig = require ('./config');
+const passport = require('./middlewares/passport');
 
 const PORT = process.env.PORT || 8080;// definimos puerto
 const app = express();//definimos constante para nuestro servidor
@@ -25,8 +26,6 @@ const session = require('express-session');
 app.use(express.static('./public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-//Motor de plantilla
-app.set('view engine', 'ejs');
 //Configuracion de Sessions
 app.use(session({
   store: MongoStore.create({mongoUrl:`mongodb+srv://mayricca5:${envConfig.DB_PASSWORD}@youneedsushi.nuk3cgy.mongodb.net/users?retryWrites=true&w=majority`}),
@@ -38,9 +37,14 @@ app.use(session({
       maxAge: 60000
   }
 }))
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Motor de plantilla
+app.set('view engine', 'ejs');
 
 //Routes
-app.use('/', routes)
+app.use(routes)
 
 
 //Variable

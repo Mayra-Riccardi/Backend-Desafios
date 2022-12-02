@@ -27,4 +27,6 @@ const UserSchema = new Schema({
 /*   accounts: [{ type: Schema.Types.ObjectId, ref: "Account", required: true }], */
 });
 UserSchema.index({ email: 1 });
+
+
 module.exports = UserSchema;

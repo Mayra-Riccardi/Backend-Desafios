@@ -1,4 +1,4 @@
-/* const auth = async (req, res, next) => {
+const auth = async (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
   }
@@ -7,9 +7,9 @@
   }
 };
 
-module.exports = auth; */
+module.exports = auth;
 
-const webAuth = (req, res, next) => {
+/* const webAuth = (req, res, next) => {
   if (req.session?.user) {
       res.redirect('/home')
   } else {
@@ -22,9 +22,9 @@ const homeAuth = (req, res, next) => {
   } else {
       res.status(401).json({ error: 'no autorizado!' })
   }
-}
+} */
 
-module.exports = {
+/* module.exports = {
   webAuth,
   homeAuth
-}
+} */

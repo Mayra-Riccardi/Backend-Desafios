@@ -1,6 +1,4 @@
 const MongoDBContainer = require ('../containers/Mongodb.container');
-const AccountsDao = require('../daos/Accounts.dao');
-/* const { generateInitialAccount } = require('../../utils/accounts.utils'); */
 const { HttpError } = require('../../utils/utils');
 const UserSchema = require('../schemas/User.schema');
 const constants = require('../../constants/api.constants');
@@ -36,8 +34,7 @@ class UsersDao extends MongoDBContainer {
       async getById(id) {
         try {
           const document = await this.model
-            .findById(id, { __v: 0 })
-            .populate('accounts').lean();
+            .findById(id, { __v: 0 }).lean()
           if (!document) {
             const errorMessage = `Resource with id ${id} does not exist in our records`;
             throw new HttpError(constants.HTTP_STATUS.NOT_FOUND, errorMessage);
@@ -52,7 +49,7 @@ class UsersDao extends MongoDBContainer {
     
       async getByEmail(email) {
         try {
-          const document = await this.model.findOne({ email }, { __v: 0 }).populate('accounts');
+          const document = await this.model.findOne({ email }, { __v: 0 })
           if (!document) {
             const errorMessage = `Wrong username or password`;
             throw new HttpError(constants.HTTP_STATUS.NOT_FOUND, errorMessage);

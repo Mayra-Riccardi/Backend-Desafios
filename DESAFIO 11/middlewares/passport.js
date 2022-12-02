@@ -1,11 +1,13 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
+const envConfig = require ('../db/config');
 
 const UsersDao = require('../models/daos/Users.daos');
 const { formatUserForDB } = require('../utils/users.utils');
 
 const User = new UsersDao();
+UsersDao.connect(`mongodb+srv://mayricca5:${envConfig.DB_PASSWORD}@youneedsushi.nuk3cgy.mongodb.net/users?retryWrites=true&w=majority`)
 
 const salt = () => bcrypt.genSaltSync(10);
 const createHash = (password) => bcrypt.hashSync(password, salt());
@@ -21,7 +23,7 @@ passport.use('signup', new LocalStrategy({
       const userItem = {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
-        birthday: req.body.birthday,
+        birthdate: req.body.birthdate,
         email: username,
         password: password
       };
@@ -42,6 +44,7 @@ passport.use('signup', new LocalStrategy({
   passport.use('signin', new LocalStrategy( async (username, password, done) => {
     try {
       const user = await User.getByEmail(username);
+      console.log(user)
       if (!isValidPassword(user, password)) {
         console.log("Invalid user or password");
         return done(null, false);

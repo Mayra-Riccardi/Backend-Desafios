@@ -1,45 +1,56 @@
-const express = require('express');
-const { webAuth, homeAuth } = require('../middlewares/auth');
-const router = express.Router();
-const authRoutes = require('./auth/auth.routers')
-const auth = require('../middlewares/auth');
-/* const productsRoutes = require('./products/products.routers') */
 const path = require('path');
+const express = require('express');
+const apiRoutes = require('./api/api.routes');
+const auth = require('../middlewares/auth');
+
+const router = express.Router();
 
 
-router.use('/auth', authRoutes)
+//Routes
+router.use('/api', apiRoutes);
 
-router.get('/', webAuth, async (req, res) => {
-    const user = req.user;
-    if (user) {
-      return res.redirect('/home');
-    }
-    else {
-      return res.sendFile(path.resolve(__dirname, '../public/login.html'));
-    }
+router.get('/', async (req, res) => {
+  const user = req.user;
+  if (user) {
+    return res.render('/profile.ejs', {username: user.firstname});
+  }
+  else {
+    return res.redirect(path.resolve('login'));
+  }
 });
 
-router.get('/home', homeAuth, async (req, res) => {
-    const user = req.user;
-    res.render('profile', { sessionUser: user });
+router.get('/login', async(req, res) => {
+  res.sendFile('login.html', {root: 'public'})
+})
+
+router.get('/register', async(req, res) => {
+  res.sendFile('signup.html', {root: 'public'})
+})
+
+router.get('/profile', auth, async (req, res) => {
+  const user = req.user;
+  res.render('profile', { username: user.firstname });
 });
 
-router.get('/register', webAuth, async (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../public/signup.html'));
-});
-
-router.get('/loginError', (req, res) => {
-    res.render(path.join(process.cwd(), 'Public/views/pages/loginError.ejs'))
+router.get('/logout', auth, (req, res, next) => {
+  try {
+    req.session.destroy((err) => {
+      if(err){
+        console.log(err);
+        res.clearCookie('my-session');
+      } else {
+        res.clearCookie('my-session');
+        res.render(path.join(process.cwd(), './public/logout.ejs'))
+      } 
+    })
+  } catch (err) {
+    console.log(err)
+  }
 })
-router.get('/signupError', (req, res) => {
-    res.render(path.join(process.cwd(), 'Public/views/pages/signupError.ejs'))
-})
-/* router.post('/products', productsRoutes) */
-
-router.get('*', (req, res) => {
-    res.status(404).send('Página no encontrada')
-})
-
+/*   req.logOut((done) => {
+    console.log('User logued out');
+    res.redirect('/');
+  });
+}); */
 
 module.exports = router;
-

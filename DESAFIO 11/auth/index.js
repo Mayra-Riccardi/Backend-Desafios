@@ -1,4 +1,4 @@
-function webAuth(req, res, next) {
+/* function webAuth(req, res, next) {
     if (req.session?.name) {
         next()
     } else {
@@ -6,7 +6,7 @@ function webAuth(req, res, next) {
     }
 }
 
-module.exports = webAuth
+module.exports = webAuth */
 
 /* export function apiAuth(req, res, next) {
     if (req.session?.nombre) {
