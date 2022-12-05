@@ -7,8 +7,9 @@ const Messages = require ('./models/messages')
 const dbConfig = require ('./db/config')
 const routes = require('./routers/app.routers')
 const MongoStore = require('connect-mongo')
-const envConfig = require ('./config');
+const envConfig = require ('./env.config');
 const passport = require('./middlewares/passport');
+const MongoContainer = require('./models/containers/Mongodb.container')
 
 const PORT = process.env.PORT || 8080;// definimos puerto
 const app = express();//definimos constante para nuestro servidor
@@ -28,11 +29,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //Configuracion de Sessions
 app.use(session({
-  store: MongoStore.create({mongoUrl:`mongodb+srv://mayricca5:${envConfig.DB_PASSWORD}@youneedsushi.nuk3cgy.mongodb.net/users?retryWrites=true&w=majority`}),
-  secret: 'shhhhhhhhhhhhhhhhhhhhh',
+  /* store: MongoStore.create({mongoUrl:`mongodb+srv://mayricca5:${envConfig.DB_PASSWORD}@youneedsushi.nuk3cgy.mongodb.net/users?retryWrites=true&w=majority`}), */
+  secret: envConfig.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   rolling: true,
+  store: MongoStore.create({
+    mongoUrl: dbConfig.mongodb.connectTo('sessions')
+  }),
   cookie: {
       maxAge: 60000
   }
@@ -90,6 +94,7 @@ io.on("connection", async (socket) => {
 
 //Conexión del Servidor
 const connectedServer = httpServer.listen(PORT, () => {
+    MongoContainer.connect()
     console.log(`🚀Server active and runing on port: ${PORT}`);
   });
   

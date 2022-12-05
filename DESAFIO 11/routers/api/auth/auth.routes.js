@@ -1,6 +1,5 @@
 const express = require ('express');
 /* const path = require('path'); */
-const authControllers = require('../../../controllers/auth.controllers');
 const passport = require('../../../middlewares/passport')
 
 const router = express.Router();

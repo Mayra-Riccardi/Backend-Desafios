@@ -1,4 +1,4 @@
-const envConfig = require('../config');
+const envConfig = require('../env.config');
 
 module.exports = {
     mariaDB: {
@@ -18,7 +18,6 @@ module.exports = {
     },
 
     mongodb: {
-        uri: `mongodb+srv://mayricca5:${envConfig.DB_PASSWORD}@youneedsushi.nuk3cgy.mongodb.net/users?retryWrites=true&w=majority`,
+            connectTo: (database) => `mongodb+srv://mayricca5:${envConfig.DB_PASSWORD}@youneedsushi.nuk3cgy.mongodb.net/${database}?retryWrites=true&w=majority`,
       }
-    
 }
